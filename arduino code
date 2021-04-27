@@ -1,0 +1,71 @@
+// initializes or defines the output pin of the LM35 temperature sensor
+// Link 1 -   https://www.instructables.com/Interface-LM35-With-NodeMCU/#step3
+// Link 2 -   https://www.instructables.com/Distance-Measurement-Using-HC-SR04-Via-NodeMCU/
+// Link 3 -   https://www.instructables.com/Interface-Moisture-Sensor-With-NodeMCU/
+
+int outputpin= A0;
+// defines pins numbers
+
+const int trigPin = 2;  //D4
+const int echoPin = 0;  //D3
+
+// defines variables
+long duration;
+int distance;
+int value = 0;
+//this sets the ground pin to LOW and the input voltage pin to high
+void setup() {
+
+  
+pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+Serial.begin(9600); 
+}
+
+void loop()       //main loop
+
+{
+   Serial.print("MOISTURE LEVEL : ");
+   value= analogRead(D0);
+   value= value/10;
+   Serial.println(value);
+   delay(2000);
+int analogValue = analogRead(outputpin);
+float millivolts = (analogValue/1024.0) * 3300; //3300 is the voltage provided by NodeMCU
+float celsius = millivolts/10;
+Serial.print("Temperature in DegreeC=   ");
+Serial.println(celsius);
+
+
+//---------- Here is the calculation for Fahrenheit ----------//
+
+float fahrenheit = ((celsius * 9)/5 + 32);
+//Serial.print(" in Farenheit=   ");
+//Serial.println(fahrenheit);
+delay(2000);
+
+//---------------------------ultrasonic-------------------------
+// Clears the trigPin
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(echoPin, HIGH);
+
+// Calculating the distance
+distance= duration*0.034/2;
+// Prints the distance on the Serial Monitor
+Serial.print("Distance: ");
+Serial.println(distance);
+delay(2000);
+Serial.println("  ");
+Serial.println("  ");
+
+//-----------------------moisture---------------
+
+}
