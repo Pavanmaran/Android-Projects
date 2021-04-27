@@ -1,4 +1,6 @@
- package com.example.firebase_all;
+package com.example.iot_chatbot;
+
+
 
 import androidx.annotation.NonNull;
 
@@ -28,13 +30,15 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference myRef;
     public TextView textView;
-    public  String text = "hello pawan";
+    public  String text = "hello";
     public String etext;
     public String value;
     public String rvalue;
     public String sensor_val;
     public String value1;
+    public String value3;
     public String sensor2;
+    public String sensor3;
 
 
     @Override
@@ -74,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
                 //value = Objects.requireNonNull(snapshot.getValue()).toString() ;
                 sensor_val = snapshot.child("sensors").child("sensor1").getValue().toString();
                 sensor2 = snapshot.child("sensors").child("sensor2").getValue().toString();
+                sensor3 = snapshot.child("sensors").child("sensor3").getValue().toString();
                 value = snapshot.child("strings").child("s1").getValue().toString();
                 value1 = snapshot.child("strings").child("s2").getValue().toString();
+                value3 = snapshot.child("strings").child("s3").getValue().toString();
 
 
 
@@ -85,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //textView.setText(value);
 
-                }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast. makeText(getApplicationContext(),"Daya kuch to error he",Toast. LENGTH_SHORT).show();
+                Toast. makeText(getApplicationContext(),"kuch error he",Toast. LENGTH_SHORT).show();
 
             }
         });
@@ -99,24 +105,31 @@ public class MainActivity extends AppCompatActivity {
 
         text = "value of moisture";
 
-            if (etext.equals(rvalue)){
-                //textView.setText(value);
-                textView.setText("Hii Prince, Value of moisture sensor1 is :" +sensor_val);
+        if (etext.equals(rvalue)){
+            //textView.setText(value);
+            textView.setText("Moisture is :" +sensor_val);
 
-                Toast. makeText(getApplicationContext(),"Strings Match! ",Toast. LENGTH_SHORT).show();
-            }
-            else{
-                Toast. makeText(getApplicationContext(),"Bro, Values did not match",Toast. LENGTH_SHORT).show();
-            }
+            Toast. makeText(getApplicationContext(),"ok",Toast. LENGTH_SHORT).show();
+        }
+
         if (etext.equals(value1)){
             //textView.setText(value);
-            textView.setText("Hii Prince, Value of moisture sensor2 is :" +sensor2);
+            textView.setText("Temperature is :" +sensor2);
 
-            Toast. makeText(getApplicationContext(),"Strings Match! ",Toast. LENGTH_SHORT).show();
+            Toast. makeText(getApplicationContext(),"ok ",Toast. LENGTH_SHORT).show();
         }
+
+        if (etext.equals(value3)){
+            //textView.setText(value);
+            textView.setText("Distance is :" +sensor3);
+
+            Toast. makeText(getApplicationContext(),"ok",Toast. LENGTH_SHORT).show();
+        }
+
         else{
-            Toast. makeText(getApplicationContext(),"Bro, Values did not match",Toast. LENGTH_SHORT).show();
+            Toast. makeText(getApplicationContext(),"didn't match",Toast. LENGTH_SHORT).show();
         }
 
     }
 }
+
